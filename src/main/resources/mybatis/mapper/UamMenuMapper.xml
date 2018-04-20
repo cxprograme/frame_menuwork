@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.cx.menu.dao.UamMenuDao" >
+    <resultMap id="BaseResultMap" type="com.cx.menu.entity.UamMenu">
+        <id column="menu_id" property="menuId" jdbcType="VARCHAR"/>
+        <result column="menu_name" property="menuName" jdbcType="VARCHAR" />
+        <result column="page_id" property="pageId" jdbcType="VARCHAR" />
+        <result column="need_show" property="needShow" jdbcType="NUMERIC"/>
+        <result column="menu_hint" property="menuHint" jdbcType="VARCHAR" />
+        <result column="menu_image_path" property="menuImagePath" jdbcType="VARCHAR" />
+        <result column="remark" property="remark" jdbcType="VARCHAR" />
+        <result column="menu_kind" property="menuKind" jdbcType="NUMERIC" />
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        menu_id,
+        menu_name,
+        page_id,
+        need_show,
+        menu_hint,
+        menu_image_path,
+        remark,
+        menu_kind
+    </sql>
+
+    <select id="getAllMenu" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM uam_menus
+    </select>
+    <select id="getAllMenuByMap" parameterType="java.util.Map" resultType="java.util.Map">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM uam_menus
+    </select>
+
+    <update id="modifyMenuByObj" parameterType="java.util.Map">
+        UPDATE uam_menus
+        SET
+          menu_name =IFNULL(#{menu_name}," "),
+          page_id = IFNULL(#{page_id}," "),
+          need_show = IFNULL(#{need_show},7),
+          menu_hint = IFNULL(#{menu_hint}," "),
+          menu_image_path = IFNULL(#{menu_image_path}," "),
+          remark = IFNULL(#{remark}," "),
+          menu_kind = IFNULL(#{menu_kind},0)
+        WHERE
+          menu_id = #{menu_id}
+    </update>
+
+    <delete id="deleteObjByMid">
+        DELETE FROM uam_menus WHERE menu_id = #{menu_id}
+    </delete>
+
+    <insert id="insertMenus" parameterType="java.util.Map">
+        INSERT INTO uam_menus(
+          menu_id,
+          menu_name,
+          page_id,
+          need_show ,
+          menu_hint,
+          menu_image_path,
+          remark,
+          menu_kind
+        )VALUES (
+          IFNULL(#{menu_id}," "),
+          IFNULL(#{menu_name}," "),
+          IFNULL(#{page_id}," "),
+          IFNULL(#{need_show},7),
+          IFNULL(#{menu_hint}," "),
+          IFNULL(#{menu_image_path}," "),
+          IFNULL(#{remark}," "),
+          IFNULL(#{menu_kind},0)
+        )
+    </insert>
+
+    <select id="getParentOrSubMenus" parameterType="java.util.Map" resultType="java.util.Map">
+      select u.menu_id, u.menu_name, u.menu_type, u.parent_menu_id, u.order_id
+        from uam_custom_menus u
+      where 1=1
+        <if test="menu_type!=null">
+           and u.menu_type = #{menu_type}
+        </if>
+        <if test="user_id!=null">
+           and u.user_id = #{user_id}
+        </if>
+        <if test="parent_menu_id">
+            and u.parent_menu_id = #{parent_menu_id}
+        </if>
+    </select>
+</mapper>
