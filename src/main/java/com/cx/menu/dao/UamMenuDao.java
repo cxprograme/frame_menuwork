@@ -29,6 +29,13 @@ public interface UamMenuDao  {
      * @return
      */
     List<Map<String,Object>> getParentOrSubMenus(Map<String, String> formAttribute);
+
+    /**
+     * 获取详细信息
+     * @param formAttribute
+     * @return
+     */
+    Map<String,Object> getMenuDetailsByArgs(Map<String,String> formAttribute);
 }
 
 

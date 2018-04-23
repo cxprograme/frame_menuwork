@@ -48,4 +48,9 @@ public class UamMenuServiceImp implements UamMenuService {
     public List<Map<String, Object>> getParentOrSubMenus(Map<String, String> formAttribute) {
         return uamMenuDao.getParentOrSubMenus(formAttribute);
     }
+
+    @Override
+    public Map<String, Object> getMenuDetailsByArgs(Map<String, String> formAttribute) {
+        return uamMenuDao.getMenuDetailsByArgs(formAttribute);
+    }
 }

@@ -84,6 +84,13 @@ public class DemoController {
         System.out.println("uammenulist:"+uamMenuList);
         return data;
     }
+
+    @RequestMapping(value = "/menus/detail",method = RequestMethod.GET)
+    public Object getMenuDetailsByArgs(@RequestParam Map<String,String> formAttribute){
+        Map<String,Object> detailsMap = uamMenuService.getMenuDetailsByArgs(formAttribute);
+        String data = GsonHelper.toJson(detailsMap);
+        return data;
+    }
 }
 
 

@@ -75,17 +75,34 @@
     </insert>
 
     <select id="getParentOrSubMenus" parameterType="java.util.Map" resultType="java.util.Map">
-      select u.menu_id, u.menu_name, u.menu_type, u.parent_menu_id, u.order_id
+      select u.menu_id, IFNULL(u.menu_name,b.menu_name) menu_name, u.menu_type, u.parent_menu_id, u.order_id
         from uam_custom_menus u
+        LEFT join uam_menus b
+        on u.menu_id = b.menu_id
       where 1=1
         <if test="menu_type!=null">
-           and u.menu_type = #{menu_type}
+           and u.menu_type in (${menu_type})
         </if>
         <if test="user_id!=null">
            and u.user_id = #{user_id}
         </if>
-        <if test="parent_menu_id">
+        <if test="parent_menu_id!=null">
             and u.parent_menu_id = #{parent_menu_id}
+        </if>
+    </select>
+    <select id="getMenuDetailsByArgs" parameterType="java.util.Map" resultType="java.util.Map">
+        select  a.menu_id,
+                a.menu_name,
+                a.page_id,
+                a.need_show ,
+                a.menu_hint,
+                a.menu_image_path,
+                a.remark,
+                a.menu_kind
+        FROM uam_menus a
+        WHERE 1=1
+        <if test="menu_id!=null">
+            and a.menu_id=#{menu_id}
         </if>
     </select>
 </mapper>
