@@ -65,6 +65,7 @@ public class DemoController {
         return messageBean;
     }
 
+    @ResponseBody
     @RequestMapping(value = "/menus/psmenus",method = RequestMethod.GET)
     public Object getParentOrSubMenus(@RequestParam Map<String,String> formAttribute){
 //        System.out.println("data:"+formAttribute);
@@ -81,7 +82,8 @@ public class DemoController {
             item.put("hidden",true);
         }
         String data = GsonHelper.toJson(uamMenuList);
-        System.out.println("uammenulist:"+uamMenuList);
+//        System.out.println("uammenulist:"+uamMenuList);
+
         return data;
     }
 
