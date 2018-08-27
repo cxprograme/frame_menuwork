@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.cx.hslib.dao.UserDao" >
+
+    <!--测试-->
+    <select id="getUserInfo" parameterType="java.util.Map" resultType="java.util.Map">
+        select * from hslib.hslib_person a where 1=1
+        <if test="mail!=null">
+            and a.mail = #{mail,jdbcType=VARCHAR}
+        </if>
+    </select>
+
+    <insert id="insertUserInfo" parameterType="java.util.Map" >
+        insert into hslib.hslib_person(person_name,sex,mail,use_role,account_balance,balance_freezed,experience,fines_total)
+        VALUES (
+          ifnull(#{person_name,jdbcType=VARCHAR},''),
+          '1',
+          #{mail,jdbcType=VARCHAR},
+          '0',
+          100,
+          0,
+          100,
+          0
+        )
+    </insert>
+
+</mapper>
+
+

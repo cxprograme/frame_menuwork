@@ -1,4 +1,4 @@
-package com.cx.menu;
+package com.cx;
 
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;

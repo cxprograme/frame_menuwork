@@ -1,5 +1,6 @@
 package com.cx.menu.dao;
 
+import com.cx.common.MenuRepository;
 import com.cx.menu.entity.UamMenu;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Component;
@@ -12,6 +13,7 @@ import java.util.Map;
  *
  */
 @Component
+@MenuRepository
 public interface UamMenuDao  {
 
     List<UamMenu> getAllMenu();
@@ -36,6 +38,8 @@ public interface UamMenuDao  {
      * @return
      */
     Map<String,Object> getMenuDetailsByArgs(Map<String,String> formAttribute);
+
+
 }
 
 

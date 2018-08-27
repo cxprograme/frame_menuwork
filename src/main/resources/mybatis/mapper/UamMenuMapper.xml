@@ -74,11 +74,28 @@
         )
     </insert>
 
+    <insert id="insertMenusExpend" parameterType="java.util.Map">
+        INSERT INTO uam_menus_expends(
+        menu_id,
+        js_text,
+        procedure_name,
+        lcrxml_text
+        )VALUES (
+        IFNULL(#{menu_id}," "),
+        IFNULL(#{js_text}," "),
+        IFNULL(#{procedure_name}," "),
+        IFNULL(#{lcrxml_text}," ")
+        )
+    </insert>
+
     <select id="getParentOrSubMenus" parameterType="java.util.Map" resultType="java.util.Map">
-      select u.menu_id, IFNULL(u.menu_name,b.menu_name) menu_name, u.menu_type, u.parent_menu_id, u.order_id
-        from uam_custom_menus u
-        LEFT join uam_menus b
+      select u.menu_id, IFNULL(u.menu_name,b.menu_name) menu_name, u.menu_type, u.parent_menu_id, u.order_id,
+             c.js_text,c.procedure_name,c.lcrxml_text
+        from menudb.uam_custom_menus u
+        LEFT join menudb.uam_menus b
         on u.menu_id = b.menu_id
+        LEFT JOIN  uam_menus_expend c
+        on c.menu_id = u.menu_id
       where 1=1
         <if test="menu_type!=null">
            and u.menu_type in (${menu_type})
@@ -88,6 +105,18 @@
         </if>
         <if test="parent_menu_id!=null">
             and u.parent_menu_id = #{parent_menu_id}
+        </if>
+        <if test="js_text!=nul and js_text !=''">
+            and c.js_text = #{js_text}
+        </if>
+        <if test="menu_id!=null and menu_id !=''">
+            and c.menu_id = #{menu_id}
+        </if>
+        <if test="procedure_name!=null and procedure_name != ''">
+            and c.procedure_name = #{procedure_name}
+        </if>
+        <if test="lcrxml_text!=null and lcrxml_text !=''">
+            and c.lcrxml_text = #{lcrxml_text}
         </if>
     </select>
     <select id="getMenuDetailsByArgs" parameterType="java.util.Map" resultType="java.util.Map">
@@ -106,4 +135,5 @@
         </if>
     </select>
 </mapper>
+
 

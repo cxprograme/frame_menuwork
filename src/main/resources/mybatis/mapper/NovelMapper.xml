@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.cx.novel.dao.NovelDao" >
+
+    <select id="getNovelInfoLists" parameterType="java.util.Map" resultType="java.util.Map">
+        select * from novel.novel_info
+        WHERE 1=1
+        <if test="novel_name!=null">
+            novel_name like '%${novel_name}%'
+        </if>
+    </select>
+
+    <!--获取数目根据参数-->
+    <select id="getNovelByArgs" parameterType="java.util.Map" resultType="java.util.Map">
+        select a.*,b.dict_name as novel_type_name from novel.novel_info a
+        left join novel.nv_config b
+        on a.novel_type = b.dict_code
+        and b.dict_entry = '1001'
+        where 1=1
+        <if test="novel_type!=null">
+            and a.novel_type=#{novel_type,jdbcType=VARCHAR}
+        </if>
+        <if test="novel_name!=null">
+            and a.novel_name =#{novel_name}
+        </if>
+        <if test="push_flag!=null">
+            and a.push_flag in
+            <foreach collection="push_flag" index="index" item="item" open="(" separator="," close=")">
+                        #{item}
+              </foreach>
+        </if>
+    </select>
+    <!--获取小说内容-->
+    <select id="getNovelInfoById" parameterType="java.util.Map" resultType="java.util.Map">
+        SELECT * from novel.novel_info where 1=1
+        <if test="novel_id!=null">
+            and novel_id = #{novel_id,jdbcType=VARCHAR}
+        </if>
+    </select>
+
+    <select id="getNovelChapterById" parameterType="java.util.Map" resultType="java.util.Map">
+        select * from novel.novel_chpater where 1=1
+        <if test="novel_id!=null">
+            and novel_id = #{novel_id,jdbcType=VARCHAR}
+        </if>
+    </select>
+
+    <select id="getNovelChaptersLists" parameterType="java.util.Map" resultType="java.util.Map">
+        select novel_id,chpater_id,chapter_name,chpater_content from novel.novel_chpater
+        WHERE 1=1
+        <if test="chapter_name!=null">
+            and chapter_name like '%${chapter_name}%'
+        </if>
+        <if test="novel_id!=null">
+            and novel_id = #{novel_id,jdbcType=VARCHAR}
+        </if>
+        order by order_id
+    </select>
+    <select id="getNovelTypes" parameterType="java.util.Map" resultType="java.util.Map">
+        SELECT
+            a.novel_type as id,substr(b.dict_name,1,2) as name
+        FROM
+            novel.novel_info a
+        LEFT JOIN novel.nv_config b ON a.novel_type = b.dict_code
+        AND b.dict_entry = '1001'
+        GROUP BY
+            a.novel_type
+    </select>
+</mapper>
+
+

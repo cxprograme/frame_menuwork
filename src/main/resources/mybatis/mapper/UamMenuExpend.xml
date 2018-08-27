@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.cx.menu.dao.UamMenusExpendDao" >
+
+
+    <insert id="insertMenusExpend" parameterType="java.util.Map">
+        INSERT INTO uam_menus_expend(
+        menu_id,
+        js_text,
+        procedure_name,
+        lcrxml_text
+        )VALUES (
+        IFNULL(#{menu_id}," "),
+        IFNULL(#{js_text}," "),
+        IFNULL(#{procedure_name}," "),
+        IFNULL(#{lcrxml_text}," ")
+        ) ON DUPLICATE KEY UPDATE
+         js_text = IFNULL(#{js_text}," "),
+         procedure_name = IFNULL(#{procedure_name}," "),
+         lcrxml_text = IFNULL(#{lcrxml_text}," ")
+    </insert>
+
+</mapper>
+
+

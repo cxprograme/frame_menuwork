@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.cx.hslib.dao.LibDao" >
+
+    <!--测试-->
+    <select id="getBookLists" parameterType="java.util.Map" resultType="java.util.Map">
+        (select '新书上架' as type_name,'N1' as type,a.* from hslib.hslib_book_show_v a order by a.update_time desc limit 1,10)
+        union all
+        (select '全部图书' as type_name,'N2' as type,b.* from hslib.hslib_book_show_v b order by b.update_time desc limit 2,20);
+    </select>
+
+</mapper>
+
+

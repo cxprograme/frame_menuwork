@@ -4,6 +4,7 @@ import com.cx.menu.entity.UamMenu;
 import com.cx.menu.service.UamMenuService;
 import com.cx.tool.bean.MessageBean;
 import com.cx.tool.gsonutil.GsonHelper;
+import org.omg.Messaging.SYNC_WITH_TRANSPORT;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -31,7 +32,7 @@ public class DemoController {
         return data;
     }
 
-    @RequestMapping(value = "/menus/mid",method = RequestMethod.PUT,consumes = "application/json; charset=utf-8")
+    @RequestMapping(value = "/menus/updateByMid",method = RequestMethod.PUT,consumes = "application/json; charset=utf-8")
     public Object modifyMenuByObj(@RequestBody Map<String, String> formAttribute){
         MessageBean messageBean = null;
         int num = uamMenuService.modifyMenuByObj(formAttribute);
@@ -41,15 +42,16 @@ public class DemoController {
         return messageBean;
     }
 
-    @RequestMapping(value = "/menus", method = RequestMethod.POST)
+    @RequestMapping(value = "/menus/add", method = RequestMethod.POST)
     public Object insertMenu(@RequestBody Map<String,String> formAttribute){
         MessageBean messageBean = null;
-        if (!formAttribute.isEmpty()){
+        System.err.println("formAttribute:"+formAttribute);
+       /* if (!formAttribute.isEmpty()){
             int num = uamMenuService.insertMenus(formAttribute);
             if (num > 0){
                 messageBean = new MessageBean<String>(0,"新增成功");
             }
-        }
+        }*/
         return messageBean;
     }
 
