@@ -63,11 +63,16 @@ public class MailController {
             //如果有就不插入,没有就插入数据
             List<Map<String,Object>> user = userService.getUserInfo(attribute);
             if (user.size() >0){
-                messageBean =new MessageBean<String>(0,"验证成功",user.get(0).toString());
+                messageBean =new MessageBean<Object>(0,"验证成功",user.get(0));
             }else{
-                String person = "用户"+ UUID.randomUUID().toString().substring(5);
+                String person = "用户"+ UUID.randomUUID().toString().substring(0,5);
                 attribute.put("person_name",person);
                 int count = userService.insertUserInfo(attribute);
+
+                //返回主键id
+                List<Map<String,Object>> newUser = userService.getUserInfo(attribute);
+                messageBean = new MessageBean<Object>(0,"验证通过",newUser.get(0));
+
             }
            return messageBean;
         }

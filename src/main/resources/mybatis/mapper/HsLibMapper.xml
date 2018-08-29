@@ -9,6 +9,15 @@
         (select '全部图书' as type_name,'N2' as type,b.* from hslib.hslib_book_show_v b order by b.update_time desc limit 2,20);
     </select>
 
+    <select id="operateBook" parameterType="java.util.Map" statementType="CALLABLE" resultType="string">
+        <![CDATA[
+            {call CustomOrdered(#{book_id,mode=IN,jdbcType=NUMERIC},
+                                #{person_id,mode=IN,jdbcType=NUMERIC},
+                                #{order_type,mode=IN,jdbcType=NUMERIC},
+                                #{OUTPARA,mode=OUT,jdbcType=VARCHAR})}
+        ]]>
+    </select>
+
 </mapper>
 
 

@@ -48,7 +48,7 @@ public class BookController {
     @LoginRequired
     @ResponseBody
     @RequestMapping(value = "lib/book/borrow",method = RequestMethod.GET)
-    public MessageBean borrowBook(@CurrentUser SysUser user){
+    public MessageBean borrowBook(){
         return new MessageBean<String>(0,"失败");
     }
 
