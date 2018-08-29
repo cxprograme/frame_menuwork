@@ -52,5 +52,19 @@ public class BookController {
         return new MessageBean<String>(0,"失败");
     }
 
+    @ResponseBody
+    @RequestMapping(value = "lib/book/operate",method = RequestMethod.POST)
+    public MessageBean operateBook(@RequestBody Map<String,Object> attribute){
+        MessageBean messageBean = null;
+        if (attribute.size()>0){
+
+            bookListService.operateBook(attribute);
+            //获取数据状态
+            int msg_no = (int) attribute.get("p_error_type");
+            messageBean = new MessageBean<String>(msg_no,"操作提示");
+        }
+        return messageBean;
+    }
+
 
 }

@@ -16,4 +16,10 @@ public interface BookListService {
      * @return
      */
     List<Map<String,Object>> getBookLists(Map<String,Object> attribute);
+    /**
+     * 书籍操作类
+     * @param attribute
+     * @return
+     */
+    Map<String,Object> operateBook(Map<String,Object> attribute);
 }

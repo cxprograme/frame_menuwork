@@ -20,4 +20,9 @@ public class BookListServiceImp implements BookListService {
     public List<Map<String, Object>> getBookLists(Map<String, Object> attribute) {
         return libDao.getBookLists(attribute);
     }
+
+    @Override
+    public Map<String, Object> operateBook(Map<String, Object> attribute) {
+        return libDao.operateBook(attribute);
+    }
 }
