@@ -36,4 +36,9 @@ public class BookListServiceImp implements BookListService {
     public int insertComment(Comment comment) {
         return libDao.insertComment(comment);
     }
+
+    @Override
+    public List<Map<String, Object>> getMyOrderInfo(Map<String, Object> attribute) {
+        return libDao.getMyOrderInfo(attribute);
+    }
 }

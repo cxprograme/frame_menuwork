@@ -41,4 +41,10 @@ public interface LibDao {
      */
     int insertComment(Comment comment);
 
+    /**
+     * 获取我的订单信息
+     * @param attribute
+     * @return
+     */
+    List<Map<String,Object>>  getMyOrderInfo(Map<String,Object> attribute);
 }
