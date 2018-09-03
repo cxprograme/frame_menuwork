@@ -1,5 +1,6 @@
 package com.cx.hslib.service;
 
+import com.cx.hslib.bean.Comment;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -22,4 +23,19 @@ public interface BookListService {
      * @return
      */
     Map<String,Object> operateBook(Map<String,Object> attribute);
+
+    /**
+     * 获取未借图书
+     * @param attribute
+     * @return
+     */
+    List<Map<String,Object>> getNoBorrowBooks(Map<String,Object> attribute);
+
+    /**
+     * 插入评论信息
+     * @param comment
+     * @return
+     */
+    int insertComment(Comment comment);
+
 }

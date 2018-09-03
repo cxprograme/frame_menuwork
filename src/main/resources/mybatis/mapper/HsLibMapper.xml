@@ -11,12 +11,40 @@
 
     <select id="operateBook" parameterType="java.util.Map" statementType="CALLABLE" resultType="string">
         <![CDATA[
-            {call CustomOrdered(#{book_id,mode=IN,jdbcType=NUMERIC},
+            {call p_CustomOrdered(#{book_id,mode=IN,jdbcType=NUMERIC},
                                 #{person_id,mode=IN,jdbcType=NUMERIC},
-                                #{order_type,mode=IN,jdbcType=NUMERIC})}
+                                #{order_type,mode=IN,jdbcType=NUMERIC},
+                                #{p_error_type,mode=OUT,jdbcType=NUMERIC})}
         ]]>
     </select>
 
+    <!--获取未借出书籍-->
+    <select id="getNoBorrowBooks" parameterType="java.util.Map" resultType="java.util.Map">
+        select * from hslib.hslib_books a where a.order_status &lt;=0
+        <if test="bookset_id!=null">
+            and a.booksets_id=#{bookset_id,jdbcType=NUMERIC}
+        </if>
+    </select>
+
+    <!--新增评论-->
+    <insert id="insertComment" useGeneratedKeys="true" keyProperty="commentId" parameterType="com.cx.hslib.bean.Comment" >
+        insert into hslib.hslib_book_comment(
+            person_id,
+            book_id,
+            comment_status,
+            marks,
+            comments,
+            if_best
+        )
+        VALUES(
+            #{personId,jdbcType=NUMERIC},
+            #{bookId,jdbcType=NUMERIC},
+            IFNULL(#{commentStatus,jdbcType=VARCHAR},' '),
+            #{marks,jdbcType=VARCHAR},
+            #{comments,jdbcType=VARCHAR},
+            IFNULL(#{ifBest,jdbcType=VARCHAR},' ')
+        )
+    </insert>
 </mapper>
 
 
