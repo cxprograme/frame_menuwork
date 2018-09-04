@@ -45,6 +45,33 @@
             IFNULL(#{ifBest,jdbcType=VARCHAR},' ')
         )
     </insert>
+
+    <!--获取我的图书订单信息-->
+    <select id="getMyOrderInfo" parameterType="java.util.Map" resultType="java.util.Map">
+
+        SELECT c.book_name,c.author,c.picture,d.book_id,a.order_id,b.line_id,
+        b.order_status,b.comment_id,b.if_deleted, b.order_date,b.delay_status,
+        b.delay_days,b.operatorpersion_id,DATEDIFF(now(),ifnull(b.return_date,now())) as days2,
+        case
+        when (b.order_status = '1' and b.is_last_line = 'Y' )then 'a'
+        when b.order_status in ('2','3') and IFNULL(b.delay_status,'N')= 'N'then 'b'
+        when b.order_status in ('-2','-3') and b.comment_id is null then 'c'
+        when b.order_status in ('-2','-3') and b.comment_id is not null then 'd'
+        when b.order_status in ('2','3') and b.delay_status = 'Y'then 'e'
+        when b.order_status ='-1' and b.operatorpersion_id = -1 then 'f'
+        when b.order_status ='-1' and IFNULL(b.operatorpersion_id,0) != -1 then 'g'
+        else ' '
+        end as line_statues
+        from hslib.hslib_order_main a,hslib.hslib_order_line  b,hslib.hslib_booksets c,hslib.hslib_books d
+        WHERE a.order_id = b.order_id
+        and a.book_id = d.book_id
+        and d.booksets_id = c.booksets_id
+        and ((b.order_status in ('1','2','3') and b.is_last_line = 'Y') or (b.order_status in ('-1','-2','-3')))
+        and IFNULL(b.if_deleted,'N')= 'N'
+        <if test="person_id!=null">
+            and a.person_id = #{person_id,jdbcType=NUMERIC}
+        </if>
+    </select>
 </mapper>
 
 

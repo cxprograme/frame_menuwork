@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -114,4 +115,21 @@ public class BookController {
         return null;
     }
 
+
+    /**
+     * 获取我的订单信息
+     * @param attribute
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping(value = "lib/book/my",method = RequestMethod.GET)
+    public Object getMyOrderInfo(@RequestParam Map<String,Object> attribute){
+        List<Map<String,Object>> myOrderLists = new ArrayList<>();
+        if (attribute.size()>0){
+//            int person_id =Integer.parseInt(attribute.get("person_id").toString());
+//            attribute.put("person_id",person_id);
+            myOrderLists = bookListService.getMyOrderInfo(attribute);
+        }
+        return myOrderLists;
+    }
 }
