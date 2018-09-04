@@ -72,6 +72,33 @@
             and a.person_id = #{person_id,jdbcType=NUMERIC}
         </if>
     </select>
+
+
+
+    <!--新增图书集-->
+    <insert id="insertBookSets" useGeneratedKeys="true" keyProperty="bookSetsId" parameterType="com.cx.hslib.bean.BookSetBean" >
+        INSERT INTO hslib.hslib_booksets (
+            book_name,
+            author,
+            class_id,
+            picture,
+            description,
+            is_recommend,
+            update_time,
+            total_amount,
+            left_amount)
+        VALUES(
+        #{bookName,jdbcType=VARCHAR},
+        #{author,jdbcType=VARCHAR},
+        #{classId,jdbcType=NUMERIC},
+        #{picture,jdbcType=VARCHAR},
+        #{description,jdbcType=VARCHAR},
+        #{isRecommend,jdbcType=VARCHAR},
+        #{updateTime,jdbcType=TIMESTAMP},
+        #{totalAmount,jdbcType=NUMERIC},
+        #{leftAmount,jdbcType=NUMERIC},
+        )
+    </insert>
 </mapper>
 
 

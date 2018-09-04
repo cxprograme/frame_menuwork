@@ -4,8 +4,8 @@ import com.cx.hslib.frame.init.WebMvcConfigurer;
 import com.cx.hslib.models.sys.SysUser;
 import com.cx.tool.bean.MessageBean;
 import com.mysql.cj.x.protobuf.MysqlxDatatypes;
-//import com.sun.tools.internal.xjc.reader.xmlschema.bindinfo.BIConversion;
-//import com.sun.tools.internal.xjc.util.CodeModelClassFactory;
+import com.sun.tools.internal.xjc.reader.xmlschema.bindinfo.BIConversion;
+import com.sun.tools.internal.xjc.util.CodeModelClassFactory;
 import org.apache.commons.mail.*;
 import org.apache.log4j.Logger;
 
